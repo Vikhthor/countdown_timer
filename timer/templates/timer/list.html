@@ -1,0 +1,48 @@
+{% extends "timer/base.html" %}
+{% block content %}
+<div class="landing bg-dark"> 
+    <div class="container">
+        <div class="row align-items-center justify-content-center"> 
+            <div class="col-sm-12 col-lg-6 text-center">
+                <h1 class="text-white font-weight-bold display-3 mb-3">Timers to help you stay on time.</h1>
+            </div> 
+        </div>
+    </div> 
+</div>
+<div class="container p-5 rounded "> 
+    {% for timer in timers %}
+    <div class="row timer mb-5">
+        <div class="col-lg-2 col-sm-12 text-center">
+            <a class="mugshot-container mb-1" href="#"> 
+                <span>{{timer.owner.username}}</span>
+            </a>
+            <small class="text-muted">{{timer.creation_date|date:"d/m/Y h:i a"}}</small>
+        </div>
+        <div class="col-lg-10 col-sm-12">
+            <div class="timer-information">
+            <h1 class="font-weight-bold mb-3">{{timer.title}}</h1> 
+            <p>{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}</p>
+            <a href="{% url 'timers_detail' timer.pk %}" class="font-weight-bold mb-3d-inline-block">View Timer</a> 
+        </div>
+    </div> 
+    {% endfor %}
+    {% if not timers %}
+        <div class="timer-container">
+            <h2>Countdown Timer</h2>
+            <div class="mb-3">
+                <input type="number" id="hours" class="form-control" placeholder="Hours" min="0">
+                <input type="number" id="minutes" class="form-control mt-2" placeholder="Minutes" min="0" max="59">
+                <input type="number" id="seconds" class="form-control mt-2" placeholder="Seconds" min="0" max="59">
+            </div>
+            <button class="btn btn-primary" onclick="startPauseTimer()">Start</button>
+            <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+            <div class="timer-display" id="timer">00:00:00</div>
+        </div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'create_timer' %}" class="btn btn-secondary mb-3">Save</a> 
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-secondary mb-3">Save</a> 
+    {% endif %}
+</div>
+{% endblock content %}
