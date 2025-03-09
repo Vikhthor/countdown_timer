@@ -20,6 +20,8 @@ $(document).ready(()=>{
             if(parseInt(val) == NaN){
                 return false;
             }
+            minutes = parseInt($("#minutes").val())
+            seconds = parseInt($("#seconds").val())
         }
     }
 
@@ -33,9 +35,11 @@ $(document).ready(()=>{
             if(parseInt(val) == NaN){
                 return false;
             }
-            minutes = parseInt($("#minutes").val())
-            seconds = parseInt($("#seconds").val())
-            if(minutes > 59 || seconds > 59){
+            const new_minutes = parseInt($("#minutes").val())
+            const new_seconds = parseInt($("#seconds").val())
+            if(new_minutes > 59 || new_seconds > 59){
+                $("#minutes").val(minutes)
+                $("#seconds").val(seconds)
                 return false
             }
         }
