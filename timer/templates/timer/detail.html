@@ -12,7 +12,14 @@
     </div>
     <div class="row">
         <div class="col-12 mt-5">
-        <p class="line-height text-justify timer-display" id="timer">{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}</p> 
+        <p class="line-height text-justify timer-display" id="timer">{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}</p>
+        <div class="mb-3" hidden>
+            <input type="number" id="hours" class="form-control" placeholder="Hours" min="0" value="{{timer.hours}}">
+            <input type="number" id="minutes" class="form-control mt-2" placeholder="Minutes" min="0" max="59" value="{{timer.minutes}}">
+            <input type="number" id="seconds" class="form-control mt-2" placeholder="Seconds" min="0" max="59" value="{{timer.seconds}}">
+        </div>
+        <button class="btn btn-primary" onclick="startPauseTimer()">Start</button>
+        <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
     </div>
 </div>
 {% endblock content %}

@@ -8,7 +8,7 @@ from django.urls import reverse
 
 timer_min_validator = MinValueValidator(limit_value=0, message="Minimum timer value is 0") 
 minutes_max_validator = MaxValueValidator(limit_value=59, message="Maximum minutes value is 59") 
-seconds_max_validator = MinValueValidator(limit_value=59, message="Maximum seconds value is 59") 
+seconds_max_validator = MaxValueValidator(limit_value=59, message="Maximum seconds value is 59") 
 
 class Timer(models.Model): 
     title = models.CharField(max_length=250, default='No title')

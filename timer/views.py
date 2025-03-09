@@ -5,8 +5,11 @@ from .models import Timer
 
 # Create your views here.
 
-def list_timers(request):	
-    timers = Timer.objects.all()	
+def list_timers(request):
+    timers = []
+    if request.user.is_authenticated:
+        user = request.user.pk
+        timers = Timer.objects.filter(owner=user)	
     return render(request, "timer/list.html", {"timers": timers}) 
 
 def detail_timer(request, pk):	
@@ -19,19 +22,20 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, "User created successfully!")
-            return redirect('timer_list') 
+            return redirect('login') 
     else:
         form = RegisterForm()
     return render(request, "timer/register.html", {"form": form})
 
 def create_timer(request):
     if request.method == "POST":
-        form = CreateTimer(request.POST) 
+        req_data = request.POST.dict()
+        req_data.update({'owner': request.user.pk})
+        form = CreateTimer(req_data) 
         if form.is_valid() and request.user.is_authenticated:
-            form.owner = request.user
             form.save()
             messages.success(request, "Timer created successfully!")
             return redirect('timer_list') 
-        else:
-            form = CreateTimer()
+    else:
+        form = CreateTimer()
     return render(request, "timer/create.html", {"form": form})

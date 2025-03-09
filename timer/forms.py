@@ -17,8 +17,9 @@ class CreateTimer(forms.ModelForm):
     title = forms.CharField(max_length=50, required=True) 
     hours = forms.IntegerField(min_value=0, required=True) 
     minutes = forms.IntegerField(min_value=0, max_value=59, required=True) 
-    seconds = forms.IntegerField(min_value=0, max_value=59, required=True) 
+    seconds = forms.IntegerField(min_value=0, max_value=59, required=True)
+    owner = forms.IntegerField(widget = forms.HiddenInput())
     
     class Meta:
         model = Timer
-        fields = ['title', 'hours', 'minutes', 'seconds']
+        fields = ['title', 'hours', 'minutes', 'seconds', 'owner']
